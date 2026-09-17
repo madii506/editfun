@@ -433,7 +433,8 @@ details p{margin:0 0 20px;color:var(--grey2);line-height:1.6;font-size:15px;max-
     fetch('/api/user?u='+encodeURIComponent(u)).then(function(r){return r.json()}).then(function(j){
       if(!j.ok){throw new Error(j.error||'reddit did not answer')}
       who2.className='who2 on';
-      who2.innerHTML='<img src="'+(j.icon||'/assets/pfp.png')+'" alt="" onerror="this.src=\'/assets/pfp.png\'"><div><div class="n">u/'+j.name+'</div><div class="m">'+fmt(j.karma.total)+' karma · '+fmt(j.karma.post)+' post · '+fmt(j.karma.comment)+' comment · account '+ago(j.created)+(j.premium?' · premium':'')+'</div></div>';
+      var meta=j.karma?(fmt(j.karma.total)+' karma · '+fmt(j.karma.post)+' post · '+fmt(j.karma.comment)+' comment · account '+ago(j.created)+(j.premium?' · premium':'')):(j.partial||'karma not readable right now');
+      who2.innerHTML='<img src="'+(j.icon||'/assets/pfp.png')+'" alt="" onerror="this.src=\'/assets/pfp.png\'"><div><div class="n">u/'+j.name+'</div><div class="m">'+meta+'</div><div class="m" style="font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase">read via '+(j.via||'reddit')+'</div></div>';
       if(j.newest){newest.className='newest on';nT.innerHTML='<a href="'+j.newest.url+'" target="_blank" rel="noopener"></a>';nT.firstChild.textContent=j.newest.title;nS.textContent=j.newest.sub+' · '+fmt(j.newest.ups)+' upvotes · '+ago(j.newest.created)+(j.newest.locked?' · locked':'')+(j.newest.archived?' · archived':'')}
       else{newest.className='newest on';nT.textContent='No posts yet.';nS.textContent='EDIT refuses to launch on an account with nothing to gild.'}
       sPair.textContent='u/'+j.name;lineTxt.textContent=j.line;
