@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EDIT</title>
+<meta name="description" content="The first launchpad for reddit. Launch a coin on any redditor — fees gild their newest post, reddit pays them for it. Nothing to claim.">
+<meta property="og:title" content="EDIT — the first launchpad for reddit">
+<meta property="og:description" content="Launch a coin on any redditor. Fees gild their newest post. Reddit pays them for it. Nothing to claim.">
+<meta property="og:image" content="/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/favicon-64.png">
+<link rel="apple-touch-icon" href="/assets/favicon-180.png">
+<style>
+@font-face{font-family:Inter;src:url(/assets/inter.woff2) format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:Plex;src:url(/assets/plexmono.woff2) format('woff2');font-weight:400 600;font-display:swap}
+:root{
+  --paper:#FBF5EE;--white:#fff;--tint:#F6EADF;--ink:#14100E;--ink2:#2A2320;
+  --red:#FF4500;--red-d:#C43500;--red-x:#FF7A45;--gold:#F5B731;--gold-d:#C98E12;--gold-p:#FFF6DF;
+  --grey:#8A8078;--grey2:#665D56;--rule:#E8DDCF;--rule-d:#3A302B;--w:1180px;--r:16px;
+  --mono:Plex,ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,system-ui,-apple-system,Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip}
+a{color:inherit}
+[hidden]{display:none!important}
+section[id],div[id]{scroll-margin-top:84px}
+.wrap{max-width:var(--w);margin:0 auto;padding:0 24px}
+
+/* ---------- nav: centred links only ---------- */
+nav{position:sticky;top:0;z-index:40;background:rgba(251,245,238,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+nav ul{list-style:none;margin:0;padding:0 16px;display:flex;justify-content:center;gap:4px;height:60px;align-items:center;overflow-x:auto;scrollbar-width:none}
+nav ul::-webkit-scrollbar{display:none}
+nav a{text-decoration:none;font-size:14px;font-weight:600;color:var(--ink2);padding:8px 12px;border-radius:999px;white-space:nowrap}
+nav a:hover{background:var(--tint)}
+nav a.x{color:var(--red)}
+
+/* ---------- bands ---------- */
+.band{position:relative;overflow:hidden}
+.b-paper{background:var(--paper)} .b-tint{background:var(--tint)} .b-white{background:var(--white)}
+.b-red{background:var(--red);color:#fff} .b-ink{background:var(--ink);color:#fff}
+.b-paper::before,.b-tint::before,.b-white::before,.b-red::before,.b-ink::before{content:"";position:absolute;inset:-40px;pointer-events:none;background-image:radial-gradient(rgba(255,69,0,.13) 1.4px,transparent 1.5px);background-size:22px 22px;animation:drift 28s linear infinite}
+.b-red::before{background-image:radial-gradient(rgba(0,0,0,.16) 1.6px,transparent 1.7px)}
+.b-ink::before{background-image:radial-gradient(rgba(255,255,255,.07) 1.4px,transparent 1.5px)}
+@keyframes drift{to{background-position:22px 22px}}
+.band>.wrap{position:relative}
+.kick{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey2)}
+.kick::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--red)}
+.b-red .kick,.b-ink .kick{color:rgba(255,255,255,.72)} .b-red .kick::before{background:#fff} .b-ink .kick::before{background:var(--gold)}
+h2{font-size:clamp(30px,4.2vw,46px);line-height:1.04;letter-spacing:-.025em;margin:14px 0 10px;font-weight:800}
+h2 em{font-style:normal;color:var(--red)} .b-red h2 em{color:var(--gold)} .b-ink h2 em{color:var(--gold)}
+.lead{font-size:17px;line-height:1.55;color:var(--grey2);max-width:640px;margin:0}
+.b-red .lead{color:rgba(255,255,255,.86)} .b-ink .lead{color:rgba(255,255,255,.7)}
+
+/* ---------- hero ---------- */
+#top .wrap{padding-top:64px;padding-bottom:40px;display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center}
+h1{font-size:clamp(44px,6.2vw,76px);line-height:.98;letter-spacing:-.035em;margin:16px 0 18px;font-weight:850}
+h1 em{font-style:normal;color:var(--red)}
+.hero-p{font-size:18px;line-height:1.55;color:var(--grey2);max-width:560px;margin:0 0 26px}
+.form{display:flex;gap:10px;max-width:560px}
+.inp{flex:1;display:flex;align-items:center;background:#fff;border:1.5px solid var(--rule);border-radius:14px;padding:0 14px;height:56px;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+.inp:focus-within{border-color:var(--red);box-shadow:0 0 0 4px rgba(255,69,0,.12)}
+.inp .pre{font-family:var(--mono);font-weight:600;color:var(--red);font-size:16px;margin-right:2px}
+.inp input{flex:1;border:0;outline:0;background:transparent;font:inherit;font-size:17px;color:var(--ink);min-width:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:56px;padding:0 22px;border-radius:14px;border:0;background:var(--red);color:#fff;font:inherit;font-weight:700;font-size:16px;cursor:pointer;text-decoration:none;box-shadow:0 8px 20px -8px rgba(255,69,0,.6);white-space:nowrap}
+.btn:hover{background:var(--red-d)} .btn:disabled{opacity:.6;cursor:wait}
+.btn.ghost{background:#fff;color:var(--ink);box-shadow:none;border:1.5px solid var(--rule)} .btn.ghost:hover{background:var(--tint)}
+.btn.gold{background:var(--gold);color:var(--ink);box-shadow:0 8px 20px -8px rgba(245,183,49,.7)} .btn.gold:hover{background:#e6a71f}
+.try{margin-top:14px;font-size:13px;color:var(--grey)}
+.try code{font-family:var(--mono);background:var(--tint);padding:2px 7px;border-radius:6px;color:var(--ink2);cursor:pointer}
+.live{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-size:13px;font-weight:600;color:var(--grey2)}
+.live i{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 0 rgba(34,197,94,.5);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+
+/* the object: a reddit post card that cycles real accounts */
+.stage{position:relative;height:520px;display:flex;align-items:center;justify-content:center}
+.ring{position:absolute;inset:0;margin:auto;width:520px;height:520px;border-radius:50%;border:1.5px dashed rgba(255,69,0,.35);animation:spin 60s linear infinite}
+.ring::after{content:"";position:absolute;inset:44px;border-radius:50%;border:1px dashed rgba(255,69,0,.22)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.post{position:relative;width:330px;background:#fff;border-radius:18px;box-shadow:0 30px 60px -24px rgba(20,16,14,.45),0 2px 0 rgba(0,0,0,.04);transform:rotate(-3deg);transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .35s}
+.post.flip{transform:rotate(-3deg) rotateY(90deg);opacity:0}
+.post .hd{display:flex;justify-content:space-between;align-items:center;background:var(--ink);color:#fff;border-radius:18px 18px 0 0;padding:10px 16px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.post .hd b{color:var(--gold);font-weight:600} .post .hd span{color:rgba(255,255,255,.55)}
+.post .who{display:flex;align-items:center;gap:12px;padding:14px 16px 8px}
+.post .who img{width:44px;height:44px;border-radius:50%;object-fit:cover;background:var(--tint)}
+.post .who .n{font-weight:800;font-size:17px;letter-spacing:-.01em} .post .who .k{font-size:12px;color:var(--grey);margin-top:2px}
+.post .win{margin:6px 16px 0;border:2px solid var(--ink);border-radius:10px;overflow:hidden;aspect-ratio:1/1;background:var(--tint);position:relative}
+.post .win img{width:100%;height:100%;object-fit:cover;display:block}
+.post .award{position:absolute;top:10px;right:10px;width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe08a,#f5b731 60%,#c98e12);box-shadow:0 4px 10px -3px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;font-size:18px}
+.post .vote{position:absolute;left:10px;top:10px;display:flex;align-items:center;gap:6px;background:#fff;border-radius:999px;padding:4px 10px 4px 6px;font-weight:800;font-size:12px;box-shadow:0 3px 8px -2px rgba(0,0,0,.3)}
+.up{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:9px solid var(--red);position:relative}
+.up::after{content:"";position:absolute;left:-3px;top:9px;width:6px;height:6px;background:var(--red)}
+.post .strip{margin:12px 16px 0;background:var(--gold-p);border:1px solid #F0D696;border-radius:10px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;font-weight:700;font-size:13px;color:#8a5a06}
+.post .strip small{font-weight:600;color:#b9862a;font-family:var(--mono);font-size:10px;letter-spacing:.1em}
+.post .ln{margin:10px 16px 16px;font-family:var(--mono);font-size:12px;color:var(--grey2);display:flex;justify-content:space-between;gap:8px}
+.post .ln b{color:var(--ink);font-weight:600}
+.tab{position:absolute;right:-46px;top:196px;background:var(--gold);color:var(--ink);border-radius:12px;padding:10px 14px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;transform:rotate(6deg);box-shadow:0 16px 30px -14px rgba(0,0,0,.5);line-height:1.5}
+.tab b{display:block;font-size:12px;letter-spacing:.14em}
+.dots{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:center;gap:6px}
+.dots i{width:6px;height:6px;border-radius:50%;background:rgba(20,16,14,.18)} .dots i.on{background:var(--red)}
+
+/* ---------- marquee ---------- */
+.mq{width:100vw;margin-left:calc(50% - 50vw);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);background:#fff;overflow:hidden;white-space:nowrap}
+.mq .t{display:inline-flex;gap:0;animation:mq 46s linear infinite;padding:14px 0}
+.mq .t:hover{animation-play-state:paused}
+.mq span{display:inline-flex;align-items:center;gap:10px;padding:0 26px;font-weight:700;font-size:15px;border-right:1px solid var(--rule)}
+.mq span img{width:28px;height:28px;border-radius:50%;object-fit:cover;background:var(--tint)}
+.mq span em{font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--red)}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ---------- how ---------- */
+#how .wrap{padding:72px 24px 76px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;margin-top:38px;padding-top:30px;border-top:1px solid var(--rule)}
+.step i{font-family:var(--mono);font-size:11px;color:var(--grey);letter-spacing:.14em;font-style:normal}
+.step h3{margin:10px 0 8px;font-size:19px;letter-spacing:-.01em;display:flex;justify-content:space-between;align-items:center}
+.step h3::after{content:"↗";color:var(--grey);font-weight:400;font-size:14px}
+.step p{margin:0;font-size:14.5px;line-height:1.55;color:var(--grey2)}
+
+/* ---------- launch band ---------- */
+#launch .wrap{padding:76px 24px 80px}
+.card{background:#fff;color:var(--ink);border-radius:20px;box-shadow:0 40px 80px -40px rgba(0,0,0,.5);margin-top:34px;overflow:hidden}
+.card .top{display:grid;grid-template-columns:1.1fr .9fr;gap:0}
+.card .l{padding:28px 28px 28px;border-right:1px solid var(--rule);min-width:0}
+.card .rgt{padding:28px;min-width:0}
+.lbl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey2);margin-bottom:10px}
+.who2{display:flex;gap:14px;align-items:center;margin-top:18px;padding:14px;border:1.5px dashed var(--rule);border-radius:14px;min-height:88px}
+.who2.on{border-style:solid;border-color:var(--rule)}
+.who2 img{width:56px;height:56px;border-radius:50%;object-fit:cover;background:var(--tint)}
+.who2 .n{font-weight:800;font-size:18px} .who2 .m{font-size:13px;color:var(--grey2);margin-top:3px}
+.who2 .empty{font-size:14px;color:var(--grey)}
+.newest{margin-top:14px;border:1.5px solid var(--rule);border-radius:14px;padding:14px;display:none}
+.newest.on{display:block}
+.newest .t{font-weight:700;font-size:15px;line-height:1.35} .newest .s{font-size:12.5px;color:var(--grey2);margin-top:6px;font-family:var(--mono)}
+.newest .t a{text-decoration:none} .newest .t a:hover{text-decoration:underline}
+.err{margin-top:12px;color:var(--red-d);font-size:14px;font-weight:600;display:none}
+.spec{list-style:none;margin:0;padding:0}
+.spec li{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--rule);font-size:14px}
+.spec li span{color:var(--grey2)} .spec li b{font-weight:700;text-align:right;font-family:var(--mono);font-size:13px;overflow-wrap:anywhere}
+.spec li b.red{color:var(--red)}
+.line{margin-top:18px;min-width:0;overflow-wrap:anywhere;background:var(--ink);color:#fff;border-radius:14px;padding:16px;font-family:var(--mono);font-size:14px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.line small{display:block;color:rgba(255,255,255,.5);font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+.line .cp{background:rgba(255,255,255,.12);color:#fff;border:0;border-radius:9px;padding:9px 12px;font:inherit;font-size:12px;cursor:pointer;white-space:nowrap}
+.line .cp:hover{background:rgba(255,255,255,.22)}
+.card .bot{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 28px;background:var(--tint);border-top:1px solid var(--rule);flex-wrap:wrap}
+.card .bot p{margin:0;font-size:13px;color:var(--grey2);max-width:640px;line-height:1.5}
+.warn{margin-top:22px;font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.88);max-width:760px;padding:14px 16px;border:1px solid rgba(255,255,255,.35);border-radius:12px;background:rgba(0,0,0,.12)}
+.warn b{color:#fff}
+
+/* ---------- maths ---------- */
+#maths .wrap{padding:72px 24px 76px}
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:34px}
+.pane{background:#fff;border:1px solid var(--rule);border-radius:18px;padding:24px}
+.pane h4{margin:0 0 14px;font-size:14px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--grey2);font-weight:600}
+.row{display:grid;grid-template-columns:1fr 150px;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--rule)}
+.row:last-child{border-bottom:0}
+.row label{font-size:14px;color:var(--ink2)} .row label small{display:block;color:var(--grey);font-size:12px;margin-top:2px}
+.row .in{display:flex;align-items:center;border:1.5px solid var(--rule);border-radius:10px;padding:0 10px;height:42px;font-family:var(--mono)}
+.row .in:focus-within{border-color:var(--red)}
+.row .in input{width:100%;border:0;outline:0;font:inherit;font-size:15px;text-align:right;background:transparent;color:var(--ink)}
+.row .in span{color:var(--grey);font-size:13px;margin-left:6px}
+.out{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+.out .o{background:var(--paper);border:1px solid var(--rule);border-radius:14px;padding:14px}
+.out .o small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey2)}
+.out .o b{display:block;font-size:28px;letter-spacing:-.02em;margin-top:6px;font-weight:850}
+.out .o b i{font-style:normal;font-size:14px;color:var(--grey);font-weight:600;margin-left:4px}
+.out .o.big{grid-column:1/-1;background:var(--gold-p);border-color:#F0D696}
+.note{margin-top:14px;font-size:12.5px;color:var(--grey);line-height:1.5}
+
+/* ---------- wall ---------- */
+#wall .wrap{padding:72px 24px 80px;text-align:center}
+.wall{margin:30px auto 0;max-width:820px;border:1.5px dashed var(--rule);border-radius:20px;padding:56px 24px}
+.wall p{margin:0 auto;max-width:560px;color:var(--grey2);font-size:15px;line-height:1.6}
+.wall .z{font-family:var(--mono);font-size:12px;color:var(--grey);letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px}
+
+/* ---------- proof ---------- */
+#proof .wrap{padding:76px 24px 80px}
+.pf{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;margin-top:34px}
+.verify{counter-reset:v}
+.verify>div{display:grid;grid-template-columns:44px 1fr;gap:14px;padding:18px 0;border-top:1px solid var(--rule-d)}
+.verify>div::before{counter-increment:v;content:"0" counter(v);font-family:var(--mono);color:var(--gold);font-size:13px;padding-top:3px}
+.verify h4{margin:0 0 6px;font-size:17px} .verify p{margin:0;font-size:14px;line-height:1.55;color:rgba(255,255,255,.66)}
+.cannot{border:1px solid var(--rule-d);border-radius:16px;overflow:hidden}
+.cannot .h{display:grid;grid-template-columns:1fr 1fr;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);padding:12px 16px;border-bottom:1px solid var(--rule-d);background:rgba(255,255,255,.04)}
+.cannot .r{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:14px 16px;border-bottom:1px solid var(--rule-d);font-size:13.5px;line-height:1.5}
+.cannot .r:last-child{border-bottom:0}
+.cannot .r span:first-child{color:rgba(255,255,255,.62)} .cannot .r span:last-child{color:#fff}
+.hole{margin-top:24px;padding:18px 20px;border-radius:14px;background:rgba(245,183,49,.1);border:1px solid rgba(245,183,49,.35);font-size:14px;line-height:1.6;color:rgba(255,255,255,.86)}
+.hole b{color:var(--gold)}
+
+/* ---------- faq ---------- */
+#faq .wrap{padding:72px 24px 96px}
+.faq{margin-top:26px;border-top:1px solid var(--rule)}
+details{border-bottom:1px solid var(--rule)}
+summary{cursor:pointer;list-style:none;padding:20px 0;font-weight:700;font-size:17px;display:flex;justify-content:space-between;gap:16px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-weight:400;color:var(--grey);font-size:22px}
+details[open] summary::after{content:"–"}
+details p{margin:0 0 20px;color:var(--grey2);line-height:1.6;font-size:15px;max-width:760px}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;transition:.25s;pointer-events:none;z-index:60}
+.toast.on{opacity:1;transform:translateX(-50%)}
+
+@media (max-width:900px){
+  #top .wrap{grid-template-columns:1fr;padding-top:40px}
+  .stage{height:460px;order:2} .ring{width:420px;height:420px}
+  .steps{grid-template-columns:1fr 1fr}
+  .card .top{grid-template-columns:1fr} .card .l{border-right:0;border-bottom:1px solid var(--rule)}
+  .calc,.pf{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .form{flex-direction:column} .btn{height:52px}
+  .steps{grid-template-columns:1fr}
+  .post{width:290px} .tab{right:-8px;top:auto;bottom:-18px} .ring{width:340px;height:340px}
+  .row{grid-template-columns:1fr} .out{grid-template-columns:1fr}
+  nav ul{justify-content:flex-start}
+}
+</style>
+</head>
+<body>
+
+<nav aria-label="Sections"><ul>
+  <li><a href="#how">How it works</a></li>
+  <li><a href="#launch">Launch</a></li>
+  <li><a href="#maths">Maths</a></li>
+  <li><a href="#wall">The wall</a></li>
+  <li><a href="#proof">Proof</a></li>
+  <li><a href="#faq">FAQ</a></li>
+  <li><a href="/docs.html">Docs</a></li>
+  <li><a class="x" href="https://x.com/" target="_blank" rel="noopener">X ↗</a></li>
+</ul></nav>
+
+<!-- ===================== HERO ===================== -->
+<div class="band b-paper" id="top"><div class="wrap">
+  <div>
+    <div class="kick">The first launchpad for reddit</div>
+    <h1>Launch a coin<br>on any <em>redditor</em>.</h1>
+    <p class="hero-p">Type a username. One transaction launches their coin. The creator fee buys reddit gold on their newest post, and reddit pays them for it — no sign-up, no wallet, nothing to claim.</p>
+    <form class="form" id="heroForm" autocomplete="off">
+      <label class="inp"><span class="pre">u/</span><input id="heroU" placeholder="username" spellcheck="false" aria-label="reddit username"></label>
+      <button class="btn" type="submit">Read them ↗</button>
+    </form>
+    <div class="try">Try <code data-u="spez">u/spez</code> <code data-u="GallowBoob">u/GallowBoob</code> <code data-u="Andromeda321">u/Andromeda321</code> — read live from reddit, nothing cached.</div>
+    <div class="live"><i></i> reader live · reddit public JSON</div>
+  </div>
+  <div class="stage" aria-hidden="true">
+    <div class="ring"></div>
+    <div class="post" id="post">
+      <div class="hd"><b>Newest post</b><span>pairable</span></div>
+      <div class="who"><img id="pAv" alt=""><div><div class="n" id="pN">u/spez</div><div class="k" id="pK">941K karma</div></div></div>
+      <div class="win"><img id="pWin" alt=""><div class="vote"><i class="up"></i><span id="pUps">941K</span></div><div class="award">🏅</div></div>
+      <div class="strip"><span>gold on this post</span><small>REDDIT PAYS THEM</small></div>
+      <div class="ln"><span>pairing line</span><b id="pLn">gilds u/spez via EDIT</b></div>
+      <div class="tab"><b>NOTHING TO CLAIM</b>no wallet · no code · no login</div>
+    </div>
+    <div class="dots" id="dots"></div>
+  </div>
+</div></div>
+
+<!-- ===================== MARQUEE ===================== -->
+<div class="mq"><div class="t" id="mq"></div></div>
+
+<!-- ===================== HOW ===================== -->
+<div class="band b-tint" id="how"><div class="wrap">
+  <div class="kick">From a username to a gilded post</div>
+  <h2>Four steps. <em>One</em> public paper trail.</h2>
+  <p class="lead">Nothing here needs the redditor to do anything. They find out the way every redditor finds out — their inbox lights up.</p>
+  <div class="steps">
+    <div class="step"><i>01</i><h3>Pick a redditor</h3><p>Any username on reddit. We read the account live — real avatar, real karma, real newest post — before anything is signed.</p></div>
+    <div class="step"><i>02</i><h3>One transaction</h3><p>The coin's description carries one line, <code>gilds u/name via EDIT</code>. That line is the pairing. It cannot be edited after launch.</p></div>
+    <div class="step"><i>03</i><h3>The post gets gold</h3><p>The creator fee is spent as reddit gold on whatever their newest post is at that moment. One gold per gild, at reddit's list price.</p></div>
+    <div class="step"><i>04</i><h3>Reddit pays them</h3><p>Gold received is what reddit pays contributors for, through its own program. The money reaches them from reddit, not from us.</p></div>
+  </div>
+</div></div>
+
+<!-- ===================== LAUNCH ===================== -->
+<div class="band b-red" id="launch"><div class="wrap">
+  <div class="kick">One form, one transaction</div>
+  <h2>The launch form</h2>
+  <p class="lead">Nothing is launched from this page. It reads the redditor, writes the pairing line, and sends you to pump.fun with it.</p>
+  <div class="card">
+    <div class="top">
+      <div class="l">
+        <div class="lbl">Who is it for</div>
+        <form class="form" id="lForm" autocomplete="off">
+          <label class="inp"><span class="pre">u/</span><input id="lU" placeholder="username" spellcheck="false" aria-label="reddit username"></label>
+          <button class="btn" type="submit" id="lBtn">Check</button>
+        </form>
+        <div class="who2" id="who2"><div class="empty">Nothing checked yet. The card in the hero is cycling through real accounts while you read this.</div></div>
+        <div class="newest" id="newest"><div class="lbl" style="margin-bottom:6px">Their newest post right now</div><div class="t" id="nT"></div><div class="s" id="nS"></div></div>
+        <div class="err" id="err"></div>
+      </div>
+      <div class="rgt">
+        <div class="lbl">What gets printed</div>
+        <ul class="spec">
+          <li><span>Pairing</span><b id="sPair">u/—</b></li>
+          <li><span>Target</span><b>their newest post, read at each gild</b></li>
+          <li><span>Rail</span><b>reddit gold → reddit contributor payout</b></li>
+          <li><span>Quantum</span><b>one gold per gild</b></li>
+          <li><span>Claim step</span><b class="red">none</b></li>
+          <li><span>If the post is locked or gone</span><b>the previous post takes it</b></li>
+          <li><span>If the account cannot be paid</span><b>the fund waits, published, never re-pointed</b></li>
+        </ul>
+        <div class="line"><div><small>Coin description · paste this</small><span id="lineTxt">gilds u/— via EDIT</span></div><button class="cp" id="cp" type="button">Copy</button></div>
+      </div>
+    </div>
+    <div class="bot">
+      <p>pump.fun opens with the coin form. Paste the line into the description. That line is the only thing EDIT reads to know who gets gilded.</p>
+      <a class="btn" id="go" href="https://pump.fun/create" target="_blank" rel="noopener">Launch on pump.fun →</a>
+    </div>
+  </div>
+  <div class="warn"><b>No coin exists yet.</b> The address will appear on this page and in the pinned post at the same moment. Anyone posting one before that is scamming you.</div>
+</div></div>
+
+<!-- ===================== MATHS ===================== -->
+<div class="band b-paper" id="maths"><div class="wrap">
+  <div class="kick">Do the maths yourself</div>
+  <h2>What a coin's fee <em>buys</em>, in gold.</h2>
+  <p class="lead">Every field is editable. The defaults are the numbers the pads publish today; if pump.fun shows you a different creator share at launch, type that one in.</p>
+  <div class="calc">
+    <div class="pane">
+      <h4>Inputs</h4>
+      <div class="row"><label>Trading volume<small>over the period you care about</small></label><div class="in"><input id="vol" value="250000" inputmode="decimal"><span>$</span></div></div>
+      <div class="row"><label>Creator fee share<small>share of volume that reaches the creator</small></label><div class="in"><input id="fee" value="0.05" inputmode="decimal"><span>%</span></div></div>
+      <div class="row"><label>Price of one gold<small>reddit's list price, single award</small></label><div class="in"><input id="gp" value="1.99" inputmode="decimal"><span>$</span></div></div>
+      <div class="row"><label>Gild cadence<small>one gild every</small></label><div class="in"><input id="cad" value="60" inputmode="numeric"><span>min</span></div></div>
+    </div>
+    <div class="pane">
+      <h4>Outputs</h4>
+      <div class="out">
+        <div class="o"><small>Creator fee</small><b id="oFee">$125</b></div>
+        <div class="o"><small>Golds bought</small><b id="oGold">62<i>golds</i></b></div>
+        <div class="o big"><small>What their posts get</small><b id="oLine">62 golds across 24 gilds, on whatever they posted last</b></div>
+      </div>
+      <p class="note">Reddit decides what it pays a contributor for gold received and who is eligible; that number is reddit's, not ours, and it is not in this calculator. What is in it: the fee, the price of gold, and how many golds that is.</p>
+    </div>
+  </div>
+</div></div>
+
+<!-- ===================== WALL ===================== -->
+<div class="band b-white" id="wall"><div class="wrap">
+  <div class="kick" style="justify-content:center">Every coin launched here</div>
+  <h2>The wall</h2>
+  <div class="wall">
+    <div class="z">Empty</div>
+    <p>No coin has been launched on EDIT yet, so there is nothing to show and nothing to invent. The first card goes up the moment the first pairing line is read on-chain: the redditor, the post that got gold, and the link to it on reddit.</p>
+  </div>
+</div></div>
+
+<!-- ===================== PROOF ===================== -->
+<div class="band b-ink" id="proof"><div class="wrap">
+  <div class="kick">No dashboard, no trust me</div>
+  <h2>Proof of <em>gold</em>.</h2>
+  <p class="lead">A gild is a public event on reddit. You do not need us to confirm it — you need the link.</p>
+  <div class="pf">
+    <div class="verify">
+      <div><div><h4>Open the post</h4><p>Every gild on the wall links the exact reddit post. Open it. The award sits on the post for anyone to see; reddit shows it, not us.</p></div></div>
+      <div><div><h4>Match the time</h4><p>Each gild carries the minute it was bought. Reddit shows when the award landed. They should agree to the minute.</p></div></div>
+      <div><div><h4>Match the pairing</h4><p>The coin's description line names the redditor. The post belongs to that redditor. If those two ever disagree, the wall is wrong and you have caught it.</p></div></div>
+    </div>
+    <div>
+      <div class="cannot">
+        <div class="h"><span>It cannot</span><span>So it</span></div>
+        <div class="r"><span>make reddit pay anyone</span><span>buys gold, which is the thing reddit pays contributors for, and says so</span></div>
+        <div class="r"><span>gild an account that is suspended or has no posts</span><span>refuses at launch, in the reader, before any transaction</span></div>
+        <div class="r"><span>change who is paired after launch</span><span>reads the pairing from the coin's own description line, which is fixed</span></div>
+        <div class="r"><span>show a number it did not measure</span><span>prints a dash where there is no number and a zero only when it counted</span></div>
+      </div>
+      <div class="hole"><b>The trust hole, named.</b> A person sends the gold. Reddit has no API for buying awards on someone else's post, so a human on this side buys it and posts the link. If they stop, the wall stops moving and the gap is public. That person is named in the docs.</div>
+    </div>
+  </div>
+</div></div>
+
+<!-- ===================== FAQ ===================== -->
+<div class="band b-tint" id="faq"><div class="wrap">
+  <div class="kick">Straight answers</div>
+  <h2>FAQ</h2>
+  <div class="faq">
+    <details><summary>Do I need the redditor's permission?</summary><p>No. Gold is something anyone can give anyone on reddit. The coin is about them; the gold lands on their post; they can ignore all of it. Nothing on this site implies they endorse anything.</p></details>
+    <details><summary>How does the redditor get money?</summary><p>Through reddit. Gold received is what reddit pays contributors for under its own program, on its own terms, to accounts it deems eligible. EDIT never holds their money and never needs their wallet.</p></details>
+    <details><summary>What if they are not eligible for reddit's payouts?</summary><p>Then the gold still lands and they still get gilded, but reddit pays nothing. The reader shows account age and karma so you can judge before you launch. The docs list reddit's published eligibility rules.</p></details>
+    <details><summary>Which post gets the gold?</summary><p>Their newest post at the moment of each gild. If it is locked, archived or deleted, the previous one. Never a comment, never a crosspost by someone else.</p></details>
+    <details><summary>Where do the numbers on this page come from?</summary><p>Karma and avatars are read live from reddit's public JSON. The calculator's defaults are typed in by us and labelled; change them. There are no measured numbers on this site yet because no coin exists yet.</p></details>
+    <details><summary>Are the accounts in the hero involved?</summary><p>No. They are examples of the kind of account you could pair. None were contacted, none endorse anything, and no coin has been launched on any of them.</p></details>
+  </div>
+</div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  // ---------- showcase: real accounts, real karma as read from reddit; avatars bundled ----------
+  var SHOW=[
+    {u:'spez',k:940980},{u:'GallowBoob',k:36838169},{u:'kn0thing',k:354067},
+    {u:'Shitty_Watercolour',k:3048805},{u:'mistersavage',k:531927},{u:'Andromeda321',k:4361833}
+  ];
+  function fmt(n){n=+n||0;return n>=1e6?(n/1e6).toFixed(1).replace(/\.0$/,'')+'M':n>=1e3?Math.round(n/1e3)+'K':String(n)}
+  var post=document.getElementById('post'),pAv=document.getElementById('pAv'),pWin=document.getElementById('pWin'),pN=document.getElementById('pN'),pK=document.getElementById('pK'),pUps=document.getElementById('pUps'),pLn=document.getElementById('pLn'),dots=document.getElementById('dots');
+  SHOW.forEach(function(){var i=document.createElement('i');dots.appendChild(i)});
+  var idx=0,timer;
+  function show(i,instant){
+    var s=SHOW[i];
+    function paint(){
+      pAv.src='/assets/av/'+s.u+'.jpg';pWin.src='/assets/av/'+s.u+'.jpg';
+      pN.textContent='u/'+s.u;pK.textContent=fmt(s.k)+' karma';pUps.textContent=fmt(s.k);pLn.textContent='gilds u/'+s.u+' via EDIT';
+      [].forEach.call(dots.children,function(d,j){d.className=j===i?'on':''});
+      post.classList.remove('flip');
+    }
+    if(instant){paint();return}
+    post.classList.add('flip');setTimeout(paint,360);
+  }
+  show(0,true);
+  function tick(){idx=(idx+1)%SHOW.length;show(idx)}
+  timer=setInterval(tick,3400);
+  post.addEventListener('mouseenter',function(){clearInterval(timer)});
+  post.addEventListener('mouseleave',function(){timer=setInterval(tick,3400)});
+
+  // marquee
+  var mq=document.getElementById('mq'),html='';
+  for(var r=0;r<2;r++)SHOW.forEach(function(s){html+='<span><img src="/assets/av/'+s.u+'.jpg" alt="">u/'+s.u+'<em>PAIRABLE</em></span>'});
+  mq.innerHTML=html;
+
+  // ---------- reader ----------
+  var who2=document.getElementById('who2'),newest=document.getElementById('newest'),nT=document.getElementById('nT'),nS=document.getElementById('nS'),err=document.getElementById('err'),sPair=document.getElementById('sPair'),lineTxt=document.getElementById('lineTxt'),lBtn=document.getElementById('lBtn'),lU=document.getElementById('lU'),heroU=document.getElementById('heroU'),go=document.getElementById('go');
+  function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('on')},1800)}
+  function ago(ms){var d=(Date.now()-ms)/864e5;if(d<1)return 'today';if(d<30)return Math.round(d)+'d ago';if(d<365)return Math.round(d/30)+'mo ago';return (d/365).toFixed(1)+'y ago'}
+  function clean(u){return String(u||'').trim().replace(/^u\//i,'').replace(/^\/+|\/+$/g,'')}
+  var busy=false;
+  function read(u){
+    u=clean(u);if(!u||busy)return;
+    busy=true;lBtn.disabled=true;lBtn.textContent='Reading…';err.style.display='none';
+    lU.value=u;
+    fetch('/api/user?u='+encodeURIComponent(u)).then(function(r){return r.json()}).then(function(j){
+      if(!j.ok){throw new Error(j.error||'reddit did not answer')}
+      who2.className='who2 on';
+      who2.innerHTML='<img src="'+(j.icon||'/assets/pfp.png')+'" alt="" onerror="this.src=\'/assets/pfp.png\'"><div><div class="n">u/'+j.name+'</div><div class="m">'+fmt(j.karma.total)+' karma · '+fmt(j.karma.post)+' post · '+fmt(j.karma.comment)+' comment · account '+ago(j.created)+(j.premium?' · premium':'')+'</div></div>';
+      if(j.newest){newest.className='newest on';nT.innerHTML='<a href="'+j.newest.url+'" target="_blank" rel="noopener"></a>';nT.firstChild.textContent=j.newest.title;nS.textContent=j.newest.sub+' · '+fmt(j.newest.ups)+' upvotes · '+ago(j.newest.created)+(j.newest.locked?' · locked':'')+(j.newest.archived?' · archived':'')}
+      else{newest.className='newest on';nT.textContent='No posts yet.';nS.textContent='EDIT refuses to launch on an account with nothing to gild.'}
+      sPair.textContent='u/'+j.name;lineTxt.textContent=j.line;
+      go.href='https://pump.fun/create';
+      toast('Read from reddit');
+    }).catch(function(e){
+      who2.className='who2';who2.innerHTML='<div class="empty">Nothing checked yet.</div>';newest.className='newest';
+      err.textContent=e.message;err.style.display='block';
+    }).then(function(){busy=false;lBtn.disabled=false;lBtn.textContent='Check'});
+  }
+  document.getElementById('lForm').addEventListener('submit',function(e){e.preventDefault();read(lU.value)});
+  document.getElementById('heroForm').addEventListener('submit',function(e){e.preventDefault();var u=clean(heroU.value);if(!u)return;document.getElementById('launch').scrollIntoView({behavior:'smooth'});read(u)});
+  [].forEach.call(document.querySelectorAll('.try code'),function(c){c.addEventListener('click',function(){heroU.value=c.getAttribute('data-u');document.getElementById('launch').scrollIntoView({behavior:'smooth'});read(c.getAttribute('data-u'))})});
+  document.getElementById('cp').addEventListener('click',function(){
+    var t=lineTxt.textContent;
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){toast('Copied')},function(){toast(t)})}else{toast(t)}
+  });
+
+  // ---------- calculator ----------
+  var vol=document.getElementById('vol'),fee=document.getElementById('fee'),gp=document.getElementById('gp'),cad=document.getElementById('cad');
+  function num(el){return parseFloat(String(el.value).replace(/[^0-9.]/g,''))||0}
+  function calc(){
+    var v=num(vol),f=num(fee)/100,g=num(gp)||1.99,c=Math.max(1,num(cad));
+    var creator=v*f;var golds=g>0?Math.floor(creator/g):0;var gilds=Math.max(1,Math.round(1440/c));
+    document.getElementById('oFee').textContent='$'+creator.toLocaleString(undefined,{maximumFractionDigits:0});
+    document.getElementById('oGold').innerHTML=golds.toLocaleString()+'<i>golds</i>';
+    var per=golds>0?Math.max(1,Math.round(golds/gilds)):0;
+    document.getElementById('oLine').textContent=golds>0?(golds.toLocaleString()+' golds across ~'+Math.min(gilds,golds)+' gilds a day, about '+per+' per gild, on whatever they posted last'):'Not enough fee for a single gold at that price.';
+  }
+  [vol,fee,gp,cad].forEach(function(el){el.addEventListener('input',calc)});calc();
+})();
+</script>
+</body>
+</html>

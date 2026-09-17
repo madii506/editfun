@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EDIT — docs</title>
+<meta name="description" content="How EDIT works, what it can and cannot do, and what is not yet verifiable.">
+<link rel="icon" href="/assets/favicon-64.png">
+<style>
+@font-face{font-family:Inter;src:url(/assets/inter.woff2) format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:Plex;src:url(/assets/plexmono.woff2) format('woff2');font-weight:400 600;font-display:swap}
+:root{--paper:#FBF5EE;--tint:#F6EADF;--ink:#14100E;--ink2:#2A2320;--red:#FF4500;--gold:#F5B731;--gold-p:#FFF6DF;--grey:#8A8078;--grey2:#665D56;--rule:#E8DDCF;--mono:Plex,ui-monospace,Menlo,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+nav{position:sticky;top:0;z-index:40;background:rgba(251,245,238,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+nav ul{list-style:none;margin:0;padding:0 16px;display:flex;justify-content:center;gap:4px;height:60px;align-items:center;overflow-x:auto;scrollbar-width:none}
+nav a{text-decoration:none;font-size:14px;font-weight:600;color:var(--ink2);padding:8px 12px;border-radius:999px;white-space:nowrap}
+nav a:hover{background:var(--tint)}
+main{max-width:760px;margin:0 auto;padding:56px 24px 120px}
+.kick{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey2)}
+h1{font-size:clamp(36px,5vw,54px);letter-spacing:-.03em;line-height:1;margin:12px 0 14px;font-weight:850}
+h1 em{font-style:normal;color:var(--red)}
+.lead{font-size:18px;line-height:1.55;color:var(--grey2);margin:0 0 40px}
+h2{font-size:24px;letter-spacing:-.02em;margin:48px 0 10px;padding-top:24px;border-top:1px solid var(--rule)}
+p,li{font-size:16px;line-height:1.65;color:var(--ink2)}
+code{font-family:var(--mono);background:var(--tint);padding:2px 7px;border-radius:6px;font-size:14px}
+.box{background:var(--gold-p);border:1px solid #F0D696;border-radius:14px;padding:16px 18px;margin:18px 0}
+.box b{display:block;margin-bottom:4px}
+.gl dt{font-weight:800;margin-top:14px} .gl dd{margin:4px 0 0;color:var(--grey2);line-height:1.6}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px}
+td{padding:10px 8px;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.5}
+td:first-child{color:var(--grey2);width:42%}
+</style>
+</head>
+<body>
+<nav><ul>
+  <li><a href="/">Home</a></li><li><a href="#what">What it is</a></li><li><a href="#rail">The rail</a></li><li><a href="#rules">Rules</a></li><li><a href="#human">The human</a></li><li><a href="#verify">Verify</a></li><li><a href="#not">Not verifiable yet</a></li><li><a href="#words">Words</a></li><li><a href="#names">Names</a></li>
+</ul></nav>
+<main>
+  <div class="kick">EDIT · docs</div>
+  <h1>Every coin is a <em>kind stranger</em>.</h1>
+  <p class="lead">On reddit, a gilded post carries the same line for fifteen years: <em>EDIT: thanks for the gold, kind stranger.</em> EDIT makes a coin the stranger. This page says exactly what that means, what it cannot do, and where you would see it fail.</p>
+
+  <h2 id="what">What it is</h2>
+  <p>EDIT is a launchpad rule, not a token. You launch a coin on pump.fun with one line in its description — <code>gilds u/name via EDIT</code>. That line pairs the coin to one reddit account. From then on, the coin's creator fee is spent as reddit gold on that account's newest post, one gold per gild, at reddit's list price. Gold received is what reddit pays contributors for under its own program, so the money reaches the redditor from reddit, with nothing for them to sign up for, connect or claim.</p>
+  <p>Every other pad in this family tells the recipient to log in, paste a code, or connect a wallet before a deadline. This one has nothing to claim. If you are a redditor and someone launched on you, the only thing you will ever do is notice.</p>
+
+  <h2 id="rail">The rail</h2>
+  <p>The rail is reddit gold plus reddit's contributor payouts. Gold is bought at reddit's list price, as a single award, on a post. Reddit decides what it pays a contributor for gold received, which accounts are eligible, and when. EDIT does not touch that side and does not quote a number for it.</p>
+  <div class="box"><b>Honest framing</b>Reddit only pays contributors who meet its published eligibility rules — account standing, karma thresholds, and country. If the paired account does not qualify, the gold still lands on the post and they are still gilded, but reddit pays nothing. The reader shows account age and karma before you launch so you can judge. We do not check eligibility for you, because reddit does not expose it.</div>
+
+  <h2 id="rules">Rules</h2>
+  <table>
+    <tr><td>Pairing</td><td>The coin's description line, <code>gilds u/name via EDIT</code>. Read once, on-chain, fixed. A coin without the line is not paired to anyone and nothing is bought.</td></tr>
+    <tr><td>Target</td><td>The account's newest post at the moment of each gild. If it is locked, archived or deleted, the previous post. Comments and crossposts by other people are never targets.</td></tr>
+    <tr><td>Quantum</td><td>One gold per gild. The fee accumulates until it covers one gold at list price, then one is bought. No fractions, no bundles bought ahead.</td></tr>
+    <tr><td>Cadence</td><td>At most one gild per paired account per hour, so each award is visible as its own event on the post rather than a pile.</td></tr>
+    <tr><td>Refusals</td><td>Suspended accounts, accounts with no posts, and usernames that do not exist are refused in the reader, before any transaction.</td></tr>
+    <tr><td>Unpayable</td><td>If gold cannot be placed for 14 days — account deleted, posts all removed — the fund waits, published, and is never re-pointed to a different account.</td></tr>
+    <tr><td>Numbers</td><td>A dash means there is no number. A zero means we counted and found nothing. The site never shows a number it did not measure.</td></tr>
+  </table>
+
+  <h2 id="human">A person sends the gold</h2>
+  <p>Reddit has no API for buying an award on someone else's post. So a human on this side buys each gold and posts the link to the post. That is the trust hole in EDIT, and it is named rather than hidden: if that person stops, the wall stops moving and the gap is visible to everyone. The instruction to gild exists on-chain the moment the fee crosses one gold; the settlement is a person following it. The person is <em>the operator of the @EDIT account on X</em>, and every gild they place is posted from that account with the link.</p>
+
+  <h2 id="verify">Verify one yourself</h2>
+  <ol>
+    <li>Open the gild on the wall. It links the exact reddit post.</li>
+    <li>On reddit, the award is on the post. Reddit shows it; we did not draw it.</li>
+    <li>The wall shows the minute the gold was bought. Reddit shows when the award landed. They agree, or the wall is wrong and you caught it.</li>
+  </ol>
+
+  <h2 id="not">What is not verifiable today</h2>
+  <p>No coin has been launched on EDIT yet. That means: no gild has happened, the wall is empty, and every number on the site is either read live from reddit (karma, avatars, newest posts) or typed into a labelled calculator field by us. The mechanic above is a specification; the observed behaviour starts with the first gild, and the first thing you will be able to check is that one.</p>
+  <p>What you also cannot verify from here: what reddit pays a given contributor, whether a given account is eligible, and how long reddit takes. Those live on reddit's side and reddit's terms.</p>
+
+  <h2 id="words">Words</h2>
+  <dl class="gl">
+    <dt>Gild</dt><dd>One purchase of one reddit gold on one post, paid from a coin's creator fee.</dd>
+    <dt>Pairing line</dt><dd><code>gilds u/name via EDIT</code>, in the coin's description. The only thing EDIT reads.</dd>
+    <dt>Kind stranger</dt><dd>The coin. Reddit's own name for whoever gave the gold.</dd>
+    <dt>Newest post</dt><dd>The most recent submission by the paired account that is not locked, archived or deleted.</dd>
+    <dt>The wall</dt><dd>Every gild, newest first, each linking its post. Empty until the first one.</dd>
+    <dt>Unpayable</dt><dd>A fund that has waited 14 days with nowhere to place gold. It stays published and stays where it is.</dd>
+    <dt>Dash</dt><dd>No number. Not zero.</dd>
+  </dl>
+
+  <h2 id="names">Names on this site</h2>
+  <p>The accounts shown in the hero, the marquee and the examples are real reddit accounts, shown as examples of the kind of account you could pair. None were contacted, none endorse anything, none have received anything, and no coin has been launched on any of them. Their avatars and karma are what reddit publishes.</p>
+  <p>The address will appear on the home page and in the pinned post at the same moment. Anyone posting one before that is scamming you.</p>
+</main>
+</body>
+</html>
