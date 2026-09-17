@@ -74,11 +74,11 @@ h1 em{font-style:normal;color:var(--red)}
 @keyframes pulse{70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
 
 /* the object: a reddit post card that cycles real accounts */
-.stage{position:relative;height:520px;display:flex;align-items:center;justify-content:center}
+.stage{position:relative;height:480px;display:flex;align-items:center;justify-content:center}
 .ring{position:absolute;inset:0;margin:auto;width:520px;height:520px;border-radius:50%;border:1.5px dashed rgba(255,69,0,.35);animation:spin 60s linear infinite}
 .ring::after{content:"";position:absolute;inset:44px;border-radius:50%;border:1px dashed rgba(255,69,0,.22)}
 @keyframes spin{to{transform:rotate(360deg)}}
-.post{position:relative;width:330px;background:#fff;border-radius:18px;box-shadow:0 30px 60px -24px rgba(20,16,14,.45),0 2px 0 rgba(0,0,0,.04);transform:rotate(-3deg);transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .35s}
+.post{position:relative;width:290px;background:#fff;border-radius:18px;box-shadow:0 30px 60px -24px rgba(20,16,14,.45),0 2px 0 rgba(0,0,0,.04);transform:rotate(-3deg);transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .35s}
 .post.flip{transform:rotate(-3deg) rotateY(90deg);opacity:0}
 .post .hd{display:flex;justify-content:space-between;align-items:center;background:var(--ink);color:#fff;border-radius:18px 18px 0 0;padding:10px 16px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
 .post .hd b{color:var(--gold);font-weight:600} .post .hd span{color:rgba(255,255,255,.55)}
@@ -119,7 +119,7 @@ h1 em{font-style:normal;color:var(--red)}
 
 /* ---------- launch band ---------- */
 #launch .wrap{padding:76px 24px 80px}
-.card{background:#fff;color:var(--ink);border-radius:20px;box-shadow:0 40px 80px -40px rgba(0,0,0,.5);margin-top:34px;overflow:hidden}
+.card{background:#fff;color:var(--ink);border-radius:20px;box-shadow:0 30px 60px -36px rgba(20,16,14,.35);border:1px solid var(--rule);margin-top:34px;overflow:hidden}
 .card .top{display:grid;grid-template-columns:1.1fr .9fr;gap:0}
 .card .l{padding:28px 28px 28px;border-right:1px solid var(--rule);min-width:0}
 .card .rgt{padding:28px;min-width:0}
@@ -144,8 +144,8 @@ h1 em{font-style:normal;color:var(--red)}
 .line .cp:hover{background:rgba(255,255,255,.22)}
 .card .bot{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 28px;background:var(--tint);border-top:1px solid var(--rule);flex-wrap:wrap}
 .card .bot p{margin:0;font-size:13px;color:var(--grey2);max-width:640px;line-height:1.5}
-.warn{margin-top:22px;font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.88);max-width:760px;padding:14px 16px;border:1px solid rgba(255,255,255,.35);border-radius:12px;background:rgba(0,0,0,.12)}
-.warn b{color:#fff}
+.warn{margin-top:22px;font-size:13.5px;line-height:1.55;color:var(--ink2);max-width:760px;padding:14px 16px;border:1px solid #F0D696;border-radius:12px;background:var(--gold-p)}
+.warn b{color:var(--red-d)}
 
 /* ---------- maths ---------- */
 #maths .wrap{padding:72px 24px 76px}
@@ -177,16 +177,16 @@ h1 em{font-style:normal;color:var(--red)}
 #proof .wrap{padding:76px 24px 80px}
 .pf{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;margin-top:34px}
 .verify{counter-reset:v}
-.verify>div{display:grid;grid-template-columns:44px 1fr;gap:14px;padding:18px 0;border-top:1px solid var(--rule-d)}
-.verify>div::before{counter-increment:v;content:"0" counter(v);font-family:var(--mono);color:var(--gold);font-size:13px;padding-top:3px}
-.verify h4{margin:0 0 6px;font-size:17px} .verify p{margin:0;font-size:14px;line-height:1.55;color:rgba(255,255,255,.66)}
-.cannot{border:1px solid var(--rule-d);border-radius:16px;overflow:hidden}
-.cannot .h{display:grid;grid-template-columns:1fr 1fr;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);padding:12px 16px;border-bottom:1px solid var(--rule-d);background:rgba(255,255,255,.04)}
-.cannot .r{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:14px 16px;border-bottom:1px solid var(--rule-d);font-size:13.5px;line-height:1.5}
+.verify>div{display:grid;grid-template-columns:44px 1fr;gap:14px;padding:18px 0;border-top:1px solid rgba(255,255,255,.28)}
+.verify>div::before{counter-increment:v;content:"0" counter(v);font-family:var(--mono);color:#fff;font-size:13px;padding-top:3px}
+.verify h4{margin:0 0 6px;font-size:17px} .verify p{margin:0;font-size:14px;line-height:1.55;color:rgba(255,255,255,.85)}
+.cannot{border-radius:16px;overflow:hidden;background:#fff;color:var(--ink)}
+.cannot .h{display:grid;grid-template-columns:1fr 1fr;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey2);padding:12px 16px;border-bottom:1px solid var(--rule);background:var(--tint)}
+.cannot .r{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:14px 16px;border-bottom:1px solid var(--rule);font-size:13.5px;line-height:1.5}
 .cannot .r:last-child{border-bottom:0}
-.cannot .r span:first-child{color:rgba(255,255,255,.62)} .cannot .r span:last-child{color:#fff}
-.hole{margin-top:24px;padding:18px 20px;border-radius:14px;background:rgba(245,183,49,.1);border:1px solid rgba(245,183,49,.35);font-size:14px;line-height:1.6;color:rgba(255,255,255,.86)}
-.hole b{color:var(--gold)}
+.cannot .r span:first-child{color:var(--grey2)} .cannot .r span:last-child{color:var(--ink);font-weight:600}
+.hole{margin-top:24px;padding:18px 20px;border-radius:14px;background:rgba(0,0,0,.14);border:1px solid rgba(255,255,255,.35);font-size:14px;line-height:1.6;color:#fff}
+.hole b{color:#fff}
 
 /* ---------- faq ---------- */
 #faq .wrap{padding:72px 24px 96px}
@@ -203,7 +203,7 @@ details p{margin:0 0 20px;color:var(--grey2);line-height:1.6;font-size:15px;max-
 
 @media (max-width:900px){
   #top .wrap{grid-template-columns:1fr;padding-top:40px}
-  .stage{height:460px;order:2} .ring{width:420px;height:420px}
+  .stage{height:440px;order:2}
   .steps{grid-template-columns:1fr 1fr}
   .card .top{grid-template-columns:1fr} .card .l{border-right:0;border-bottom:1px solid var(--rule)}
   .calc,.pf{grid-template-columns:1fr}
@@ -211,7 +211,7 @@ details p{margin:0 0 20px;color:var(--grey2);line-height:1.6;font-size:15px;max-
 @media (max-width:560px){
   .form{flex-direction:column} .btn{height:52px}
   .steps{grid-template-columns:1fr}
-  .post{width:290px} .tab{right:-8px;top:auto;bottom:-18px} .ring{width:340px;height:340px}
+  .post{width:270px}
   .row{grid-template-columns:1fr} .out{grid-template-columns:1fr}
   nav ul{justify-content:flex-start}
 }
@@ -220,11 +220,11 @@ details p{margin:0 0 20px;color:var(--grey2);line-height:1.6;font-size:15px;max-
 <body>
 
 <nav aria-label="Sections"><ul>
-  <li><a href="#how">How it works</a></li>
   <li><a href="#launch">Launch</a></li>
+  <li><a href="#how">How it works</a></li>
   <li><a href="#maths">Maths</a></li>
-  <li><a href="#wall">The wall</a></li>
   <li><a href="#proof">Proof</a></li>
+  <li><a href="#wall">The wall</a></li>
   <li><a href="#faq">FAQ</a></li>
   <li><a href="/docs.html">Docs</a></li>
   <li><a class="x" href="https://x.com/" target="_blank" rel="noopener">X ↗</a></li>
@@ -241,17 +241,14 @@ details p{margin:0 0 20px;color:var(--grey2);line-height:1.6;font-size:15px;max-
       <button class="btn" type="submit">Read them ↗</button>
     </form>
     <div class="try">Try <code data-u="spez">u/spez</code> <code data-u="GallowBoob">u/GallowBoob</code> <code data-u="Andromeda321">u/Andromeda321</code> — read live from reddit, nothing cached.</div>
-    <div class="live"><i></i> reader live · reddit public JSON</div>
   </div>
   <div class="stage" aria-hidden="true">
-    <div class="ring"></div>
     <div class="post" id="post">
       <div class="hd"><b>Newest post</b><span>pairable</span></div>
       <div class="who"><img id="pAv" alt=""><div><div class="n" id="pN">u/spez</div><div class="k" id="pK">941K karma</div></div></div>
       <div class="win"><img id="pWin" alt=""><div class="vote"><i class="up"></i><span id="pUps">941K</span></div><div class="award">🏅</div></div>
       <div class="strip"><span>gold on this post</span><small>REDDIT PAYS THEM</small></div>
       <div class="ln"><span>pairing line</span><b id="pLn">gilds u/spez via EDIT</b></div>
-      <div class="tab"><b>NOTHING TO CLAIM</b>no wallet · no code · no login</div>
     </div>
     <div class="dots" id="dots"></div>
   </div>
@@ -260,21 +257,8 @@ details p{margin:0 0 20px;color:var(--grey2);line-height:1.6;font-size:15px;max-
 <!-- ===================== MARQUEE ===================== -->
 <div class="mq"><div class="t" id="mq"></div></div>
 
-<!-- ===================== HOW ===================== -->
-<div class="band b-tint" id="how"><div class="wrap">
-  <div class="kick">From a username to a gilded post</div>
-  <h2>Four steps. <em>One</em> public paper trail.</h2>
-  <p class="lead">Nothing here needs the redditor to do anything. They find out the way every redditor finds out — their inbox lights up.</p>
-  <div class="steps">
-    <div class="step"><i>01</i><h3>Pick a redditor</h3><p>Any username on reddit. We read the account live — real avatar, real karma, real newest post — before anything is signed.</p></div>
-    <div class="step"><i>02</i><h3>One transaction</h3><p>The coin's description carries one line, <code>gilds u/name via EDIT</code>. That line is the pairing. It cannot be edited after launch.</p></div>
-    <div class="step"><i>03</i><h3>The post gets gold</h3><p>The creator fee is spent as reddit gold on whatever their newest post is at that moment. One gold per gild, at reddit's list price.</p></div>
-    <div class="step"><i>04</i><h3>Reddit pays them</h3><p>Gold received is what reddit pays contributors for, through its own program. The money reaches them from reddit, not from us.</p></div>
-  </div>
-</div></div>
-
 <!-- ===================== LAUNCH ===================== -->
-<div class="band b-red" id="launch"><div class="wrap">
+<div class="band b-tint" id="launch"><div class="wrap">
   <div class="kick">One form, one transaction</div>
   <h2>The launch form</h2>
   <p class="lead">Nothing is launched from this page. It reads the redditor, writes the pairing line, and sends you to pump.fun with it.</p>
@@ -312,6 +296,19 @@ details p{margin:0 0 20px;color:var(--grey2);line-height:1.6;font-size:15px;max-
   <div class="warn"><b>No coin exists yet.</b> The address will appear on this page and in the pinned post at the same moment. Anyone posting one before that is scamming you.</div>
 </div></div>
 
+<!-- ===================== HOW ===================== -->
+<div class="band b-white" id="how"><div class="wrap">
+  <div class="kick">From a username to a gilded post</div>
+  <h2>Four steps. <em>One</em> public paper trail.</h2>
+  <p class="lead">Nothing here needs the redditor to do anything. They find out the way every redditor finds out — their inbox lights up.</p>
+  <div class="steps">
+    <div class="step"><i>01</i><h3>Pick a redditor</h3><p>Any username on reddit. We read the account live — real avatar, real karma, real newest post — before anything is signed.</p></div>
+    <div class="step"><i>02</i><h3>One transaction</h3><p>The coin's description carries one line, <code>gilds u/name via EDIT</code>. That line is the pairing. It cannot be edited after launch.</p></div>
+    <div class="step"><i>03</i><h3>The post gets gold</h3><p>The creator fee is spent as reddit gold on whatever their newest post is at that moment. One gold per gild, at reddit's list price.</p></div>
+    <div class="step"><i>04</i><h3>Reddit pays them</h3><p>Gold received is what reddit pays contributors for, through its own program. The money reaches them from reddit, not from us.</p></div>
+  </div>
+</div></div>
+
 <!-- ===================== MATHS ===================== -->
 <div class="band b-paper" id="maths"><div class="wrap">
   <div class="kick">Do the maths yourself</div>
@@ -337,18 +334,8 @@ details p{margin:0 0 20px;color:var(--grey2);line-height:1.6;font-size:15px;max-
   </div>
 </div></div>
 
-<!-- ===================== WALL ===================== -->
-<div class="band b-white" id="wall"><div class="wrap">
-  <div class="kick" style="justify-content:center">Every coin launched here</div>
-  <h2>The wall</h2>
-  <div class="wall">
-    <div class="z">Empty</div>
-    <p>No coin has been launched on EDIT yet, so there is nothing to show and nothing to invent. The first card goes up the moment the first pairing line is read on-chain: the redditor, the post that got gold, and the link to it on reddit.</p>
-  </div>
-</div></div>
-
 <!-- ===================== PROOF ===================== -->
-<div class="band b-ink" id="proof"><div class="wrap">
+<div class="band b-red" id="proof"><div class="wrap">
   <div class="kick">No dashboard, no trust me</div>
   <h2>Proof of <em>gold</em>.</h2>
   <p class="lead">A gild is a public event on reddit. You do not need us to confirm it — you need the link.</p>
@@ -368,6 +355,16 @@ details p{margin:0 0 20px;color:var(--grey2);line-height:1.6;font-size:15px;max-
       </div>
       <div class="hole"><b>The trust hole, named.</b> A person sends the gold. Reddit has no API for buying awards on someone else's post, so a human on this side buys it and posts the link. If they stop, the wall stops moving and the gap is public. That person is named in the docs.</div>
     </div>
+  </div>
+</div></div>
+
+<!-- ===================== WALL ===================== -->
+<div class="band b-white" id="wall"><div class="wrap">
+  <div class="kick" style="justify-content:center">Every coin launched here</div>
+  <h2>The wall</h2>
+  <div class="wall">
+    <div class="z">Empty</div>
+    <p>No coin has been launched on EDIT yet, so there is nothing to show and nothing to invent. The first card goes up the moment the first pairing line is read on-chain: the redditor, the post that got gold, and the link to it on reddit.</p>
   </div>
 </div></div>
 
@@ -430,8 +427,25 @@ details p{margin:0 0 20px;color:var(--grey2);line-height:1.6;font-size:15px;max-
     u=clean(u);if(!u||busy)return;
     busy=true;lBtn.disabled=true;lBtn.textContent='Reading…';err.style.display='none';
     lU.value=u;
-    fetch('/api/user?u='+encodeURIComponent(u)).then(function(r){return r.json()}).then(function(j){
+    var SHOWAV={};SHOW.forEach(function(s){SHOWAV[s.u.toLowerCase()]='/assets/av/'+s.u+'.jpg'});
+    function arctic(u){
+      return fetch('https://arctic-shift.photon-reddit.com/api/users/search?author='+encodeURIComponent(u)+'&limit=1').then(function(r){return r.json()}).then(function(j){
+        var d=j&&j.data&&j.data[0];if(!d){return {ok:false,error:'u/'+u+' does not exist on reddit, or has never posted.'}}
+        var m=d._meta||{};
+        return fetch('https://arctic-shift.photon-reddit.com/api/posts/search?author='+encodeURIComponent(u)+'&limit=1&sort=desc').then(function(r){return r.json()}).catch(function(){return {}}).then(function(p){
+          var c=p&&p.data&&p.data[0];var sub=c?(String(c.subreddit).indexOf('u_')===0?'u/'+String(c.subreddit).slice(2):'r/'+c.subreddit):'';
+          return {ok:true,name:d.author||u,icon:'',karma:{post:m.post_karma||0,comment:m.comment_karma||0,total:m.total_karma||0},created:(m.earliest_post_at||m.earliest_comment_at||0)*1000,premium:false,
+            newest:c?{title:c.title,sub:sub,ups:c.score||0,created:(c.created_utc||0)*1000,url:'https://www.reddit.com'+(c.permalink||''),locked:!!c.locked,archived:!!c.archived}:null,
+            via:'arctic shift archive'+(m.post_stats_updated_at?' · karma as of '+new Date(m.post_stats_updated_at*1000).toISOString().slice(0,10):''),partial:'',line:'gilds u/'+(d.author||u)+' via EDIT'};
+        });
+      });
+    }
+    fetch('/api/user?u='+encodeURIComponent(u)).then(function(r){return r.json()}).catch(function(){return {ok:false,error:'refusing'}}).then(function(j){
+      if(!j.ok&&/refusing|did not answer/.test(j.error||''))return arctic(u);
+      return j;
+    }).then(function(j){
       if(!j.ok){throw new Error(j.error||'reddit did not answer')}
+      if(!j.icon&&SHOWAV[String(j.name).toLowerCase()])j.icon=SHOWAV[String(j.name).toLowerCase()];
       who2.className='who2 on';
       var meta=j.karma?(fmt(j.karma.total)+' karma · '+fmt(j.karma.post)+' post · '+fmt(j.karma.comment)+' comment · account '+ago(j.created)+(j.premium?' · premium':'')):(j.partial||'karma not readable right now');
       who2.innerHTML='<img src="'+(j.icon||'/assets/pfp.png')+'" alt="" onerror="this.src=\'/assets/pfp.png\'"><div><div class="n">u/'+j.name+'</div><div class="m">'+meta+'</div><div class="m" style="font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase">read via '+(j.via||'reddit')+'</div></div>';
