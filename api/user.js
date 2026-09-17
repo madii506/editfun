@@ -35,6 +35,7 @@ function shapeUser(d, raw) {
 }
 function shapePost(c) {
   if (!c) return null;
+  if (c.subreddit && !c.subreddit_name_prefixed) c.subreddit_name_prefixed = (String(c.subreddit).startsWith('u_') ? 'u/' + String(c.subreddit).slice(2) : 'r/' + c.subreddit);
   return { title: c.title, sub: c.subreddit_name_prefixed || ('r/' + c.subreddit), ups: c.ups || c.score || 0, created: (c.created_utc || 0) * 1000,
     url: c.permalink ? 'https://www.reddit.com' + c.permalink : (c.url || ''), locked: !!c.locked, archived: !!c.archived };
 }
@@ -69,6 +70,23 @@ async function viaPublic(raw) {
   return null;
 }
 
+async function viaArctic(raw) {
+  // Arctic Shift: an independent, openly queryable archive of reddit. Karma is as of its last stats pass; no avatar.
+  const H = { headers: { 'user-agent': UA } };
+  const u = await fetch(`https://arctic-shift.photon-reddit.com/api/users/search?author=${encodeURIComponent(raw)}&limit=1`, H);
+  if (!u.ok) return null;
+  const uj = await u.json(); const d = uj && uj.data && uj.data[0];
+  if (!d) return { missing: true };
+  const m = d._meta || {};
+  let c = null;
+  try { const p = await fetch(`https://arctic-shift.photon-reddit.com/api/posts/search?author=${encodeURIComponent(raw)}&limit=1&sort=desc`, H); if (p.ok) { const pj = await p.json(); c = pj.data && pj.data[0]; } } catch (e) {}
+  const asOf = m.post_stats_updated_at ? new Date(m.post_stats_updated_at * 1000).toISOString().slice(0, 10) : '';
+  return {
+    user: { name: d.author || raw, icon: '', karma: { post: m.post_karma || 0, comment: m.comment_karma || 0, total: m.total_karma || 0 }, created: (m.earliest_post_at || m.earliest_comment_at || 0) * 1000, verified: false, premium: false, suspended: false },
+    newest: c ? shapePost(c) : null, via: 'arctic shift archive' + (asOf ? ' · karma as of ' + asOf : ''), partial: 'avatar not readable right now',
+  };
+}
+
 async function viaPullpush(raw) {
   try {
     const r = await fetch(`https://api.pullpush.io/reddit/search/submission/?author=${encodeURIComponent(raw)}&size=1&sort=desc`, { headers: { 'user-agent': UA } });
@@ -87,6 +105,7 @@ export default async function handler(req, res) {
   let r = null;
   try { r = await viaOAuth(raw); } catch (e) { r = null; }
   if (!r) { try { r = await viaPublic(raw); } catch (e) { r = null; } }
+  if (!r) { try { r = await viaArctic(raw); } catch (e) { r = null; } }
   if (!r) { try { r = await viaPullpush(raw); } catch (e) { r = null; } }
   if (!r) return res.status(200).json({ ok: false, error: 'reddit is refusing reads from our server right now, and the archive did not answer either. Try again in a minute.' });
   if (r.missing) return res.status(200).json({ ok: false, error: `u/${raw} does not exist on reddit, or has never posted.` });
